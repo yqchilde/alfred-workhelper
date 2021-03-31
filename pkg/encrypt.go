@@ -1,45 +1,12 @@
-package service
+package pkg
 
 import (
 	"crypto/sha256"
 	"encoding/hex"
-	"fmt"
 	"math/rand"
-	"strings"
 
 	"golang.org/x/crypto/pbkdf2"
 )
-
-func RunEncrypt() {
-	var err error
-
-	args := wf.Args()
-
-	if len(args) == 0 {
-		return
-	}
-
-	defer func() {
-		if err == nil {
-			wf.SendFeedback()
-			return
-		}
-	}()
-
-	input := strings.Join(args, " ")
-
-	encryptString(input)
-
-}
-
-func encryptString(input string) {
-	secs := fmt.Sprintf("%s", encryptPassword(input))
-	wf.NewItem(secs).
-		Subtitle("encrypt编码").
-		Arg(secs).
-		Icon(iconUser).
-		Valid(true)
-}
 
 // Vector is used for generate password
 type Vector struct {
@@ -88,10 +55,4 @@ func GenerateSalt(length int) string {
 	}
 
 	return bytes2String(bytes)
-}
-
-func encryptPassword(password string) string {
-	salt := GenerateSalt(6)
-	encPwd := EncryptPassword(password, salt)
-	return encPwd
 }
