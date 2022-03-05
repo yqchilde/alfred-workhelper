@@ -1,4 +1,4 @@
-package service
+package cmd
 
 import (
 	"errors"
@@ -9,6 +9,7 @@ import (
 	"time"
 
 	aw "github.com/deanishe/awgo"
+	"github.com/spf13/cobra"
 )
 
 var (
@@ -31,43 +32,42 @@ var (
 	regexpTimestamp = regexp.MustCompile(`^[1-9]\d+$`)
 )
 
-func RunDateX() {
-
-	var err error
-
-	args := wf.Args()
-
-	if len(args) == 0 {
-		return
-	}
-
-	defer func() {
-		if err == nil {
-			wf.SendFeedback()
+var dateCmd = &cobra.Command{
+	Use:   "date",
+	Run: func(cmd *cobra.Command, args []string) {
+		var err error
+		if len(args) == 0 {
 			return
 		}
-	}()
 
-	// now
-	input := strings.Join(args, " ")
-	if input == "now" {
-		processNow()
-		return
-	}
+		defer func() {
+			if err == nil {
+				wf.SendFeedback()
+				return
+			}
+		}()
 
-	// timestamp
-	if regexpTimestamp.MatchString(input) {
-		v, e := strconv.ParseInt(args[0], 10, 32)
-		if e == nil {
-			processTimestamp(time.Unix(v, 0))
+		// now
+		input := strings.Join(args, " ")
+		if input == "now" {
+			processNow()
 			return
 		}
-		err = e
-		return
-	}
 
-	// time string
-	err = processTimeStr(input)
+		// timestamp
+		if regexpTimestamp.MatchString(input) {
+			v, e := strconv.ParseInt(args[0], 10, 32)
+			if e == nil {
+				processTimestamp(time.Unix(v, 0))
+				return
+			}
+			err = e
+			return
+		}
+
+		// time string
+		err = processTimeStr(input)
+	},
 }
 
 // process the current time
@@ -135,7 +135,7 @@ func processTimeStr(timeStr string) error {
 }
 
 func matchedLayout(layouts []string, timeStr string) (string, time.Time, bool) {
-	loc,_:=time.LoadLocation("Local")
+	loc, _ := time.LoadLocation("Local")
 	for _, layout := range layouts {
 		time, err := time.ParseInLocation(layout, timeStr, loc)
 		if err == nil {
