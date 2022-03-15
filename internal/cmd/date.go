@@ -33,7 +33,7 @@ var (
 )
 
 var dateCmd = &cobra.Command{
-	Use:   "date",
+	Use: "date",
 	Run: func(cmd *cobra.Command, args []string) {
 		var err error
 		if len(args) == 0 {
@@ -137,9 +137,9 @@ func processTimeStr(timeStr string) error {
 func matchedLayout(layouts []string, timeStr string) (string, time.Time, bool) {
 	loc, _ := time.LoadLocation("Local")
 	for _, layout := range layouts {
-		time, err := time.ParseInLocation(layout, timeStr, loc)
+		t, err := time.ParseInLocation(layout, timeStr, loc)
 		if err == nil {
-			return layout, time, true
+			return layout, t, true
 		}
 	}
 

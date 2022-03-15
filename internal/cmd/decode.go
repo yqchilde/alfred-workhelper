@@ -6,11 +6,11 @@ import (
 
 	"github.com/spf13/cobra"
 
-	"alfred/pkg"
+	"alfred/pkg/codec"
 )
 
 var decodeCmd = &cobra.Command{
-	Use:   "decode",
+	Use: "decode",
 	Run: func(cmd *cobra.Command, args []string) {
 		if len(args) == 0 {
 			return
@@ -26,7 +26,7 @@ var decodeCmd = &cobra.Command{
 }
 
 func base64Decode(input string) {
-	secs := fmt.Sprintf("%s", pkg.Base64Decode(input))
+	secs := fmt.Sprintf("%s", codec.Base64Decode(input))
 	wf.NewItem(secs).
 		Subtitle("base64解码").
 		Arg(secs).

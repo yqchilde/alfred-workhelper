@@ -6,11 +6,11 @@ import (
 
 	"github.com/spf13/cobra"
 
-	"alfred/pkg"
+	"alfred/pkg/codec"
 )
 
 var encodeCmd = &cobra.Command{
-	Use:   "encode",
+	Use: "encode",
 	Run: func(cmd *cobra.Command, args []string) {
 		if len(args) == 0 {
 			return
@@ -26,7 +26,7 @@ var encodeCmd = &cobra.Command{
 }
 
 func base64Encode(input string) {
-	secs := fmt.Sprintf("%s", pkg.Base64Encode(input))
+	secs := fmt.Sprintf("%s", codec.Base64Encode(input))
 	wf.NewItem(secs).
 		Subtitle("base64编码").
 		Arg(secs).
@@ -34,7 +34,7 @@ func base64Encode(input string) {
 }
 
 func md5Encode(input string) {
-	secs := fmt.Sprintf("%s", pkg.MD5Encode(input))
+	secs := fmt.Sprintf("%s", codec.MD5Encode(input))
 	wf.NewItem(secs).
 		Subtitle("md5编码").
 		Arg(secs).
