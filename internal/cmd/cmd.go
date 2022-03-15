@@ -17,7 +17,7 @@ func init() {
 	wf = aw.New()
 	rootCmd.AddCommand(decodeCmd)
 	rootCmd.AddCommand(encodeCmd)
-	rootCmd.AddCommand(encryptCmd)
+	rootCmd.AddCommand(signCmd)
 	rootCmd.AddCommand(dateCmd)
 	rootCmd.AddCommand(uniqueIdCmd)
 }
