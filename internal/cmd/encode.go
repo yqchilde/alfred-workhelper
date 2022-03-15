@@ -1,9 +1,6 @@
 package cmd
 
 import (
-	"fmt"
-	"strings"
-
 	"github.com/spf13/cobra"
 
 	"alfred/pkg/codec"
@@ -20,21 +17,21 @@ var encodeCmd = &cobra.Command{
 			wf.SendFeedback()
 			return
 		}()
-		base64Encode(strings.Join(args, " "))
-		md5Encode(strings.Join(args, " "))
+		base64Encode(args)
+		md5Encode(args)
 	},
 }
 
-func base64Encode(input string) {
-	secs := fmt.Sprintf("%s", codec.Base64Encode(input))
+func base64Encode(args []string) {
+	secs := codec.Base64Encode(args[0])
 	wf.NewItem(secs).
 		Subtitle("base64编码").
 		Arg(secs).
 		Valid(true)
 }
 
-func md5Encode(input string) {
-	secs := fmt.Sprintf("%s", codec.MD5Encode(input))
+func md5Encode(args []string) {
+	secs := codec.MD5Encode(args[0])
 	wf.NewItem(secs).
 		Subtitle("md5编码").
 		Arg(secs).

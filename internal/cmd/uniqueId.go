@@ -21,16 +21,17 @@ var uniqueIdCmd = &cobra.Command{
 			return
 		}()
 
-		input := strings.Join(args, " ")
-		if input == "get" {
-			generateUUID()
-			snowflakeID()
-		}
+		generateUUID(args)
+		snowflakeID(args)
 	},
 }
 
 // generateUUID generates a UUID
-func generateUUID() {
+func generateUUID(args []string) {
+	if args[0] != "get" {
+		return
+	}
+
 	newUUID, err := uuid.NewUUID()
 	if err != nil {
 		wf.FatalError(err)
@@ -50,7 +51,11 @@ func generateUUID() {
 }
 
 // snowflakeID generates a snowflake ID
-func snowflakeID() {
+func snowflakeID(args []string) {
+	if args[0] != "get" {
+		return
+	}
+
 	node, err := snowflake.NewNode(1)
 	if err != nil {
 		fmt.Println(err)
