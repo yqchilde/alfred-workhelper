@@ -16,14 +16,10 @@ var (
 	}
 
 	layouts = []string{
+		"2006-01-02",
+		"20060102150405",
 		"2006-01-02 15:04:05",
 		"2006-01-02T15:04:05Z",
-	}
-
-	moreLayouts = []string{
-		"2006-01-02",
-		"2006-01-02 15:04",
-		"2006-01-02 15:04:05",
 	}
 )
 
@@ -53,7 +49,7 @@ func getNowTime(args []string) {
 	now := time.Now()
 	secs := fmt.Sprintf("%d", now.Unix())
 	wf.NewItem(secs).
-		Subtitle("unix timestamp").
+		Subtitle("Format: unix timestamp").
 		Icon(iconClock).
 		Arg(secs).
 		Valid(true)
@@ -62,7 +58,7 @@ func getNowTime(args []string) {
 	for _, layout := range layouts {
 		v := now.Format(layout)
 		wf.NewItem(v).
-			Subtitle(layout).
+			Subtitle(fmt.Sprintf("Format: %s", layout)).
 			Icon(iconClock).
 			Arg(v).
 			Valid(true)
@@ -96,28 +92,25 @@ func getByTimeStr(args []string) {
 
 	l := matchLayout(layouts, timeStr)
 	if l == nil { // layouts样式不匹配
-		l = matchLayout(moreLayouts, timeStr)
-		if l == nil { // moreLayouts样式不匹配
-			parseInt, err := strconv.ParseInt(timeStr, 10, 64)
-			if err != nil {
-				return
-			}
-			for _, layout := range layouts {
-				v := time.Unix(parseInt, 0).Format(layout)
-				wf.NewItem(v).
-					Subtitle(layout).
-					Icon(iconClock).
-					Arg(v).
-					Valid(true)
-			}
+		parseInt, err := strconv.ParseInt(timeStr, 10, 64)
+		if err != nil {
 			return
 		}
+		for _, layout := range layouts {
+			v := time.Unix(parseInt, 0).Format(layout)
+			wf.NewItem(v).
+				Subtitle(fmt.Sprintf("Format: %s", layout)).
+				Icon(iconClock).
+				Arg(v).
+				Valid(true)
+		}
+		return
 	}
 
 	// prepend unix timeObj
 	secs := fmt.Sprintf("%d", l.Time.Unix())
 	wf.NewItem(secs).
-		Subtitle("unix timestamp").
+		Subtitle("Format: unix timestamp").
 		Icon(iconClock).
 		Arg(secs).
 		Valid(true)
@@ -129,7 +122,7 @@ func getByTimeStr(args []string) {
 		}
 		v := l.Time.Format(layout)
 		wf.NewItem(v).
-			Subtitle(layout).
+			Subtitle(fmt.Sprintf("Format: %s", layout)).
 			Icon(iconClock).
 			Arg(v).
 			Valid(true)
