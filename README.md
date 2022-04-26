@@ -18,6 +18,12 @@
 
 - [x] 获取唯一ID
 
+- [x] 获取内网所有可用的 IPV4 地址
+
+- [ ] 模糊查询某个应用名进程id
+
+- [ ] kill某个进程
+
 ## 插件直装
 
 下载 [Alfred WorkHelper](https://github.com/yqchilde/alfred-workhelper/tree/main/alfred_workflow) 下的 `WorkHelper.alfredworkflow` 插件，双击可将其加入到 Alfred 中。

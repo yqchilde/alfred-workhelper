@@ -1,7 +1,7 @@
 #!/bin/bash
 
 if [[ $1 == "build" ]]; then
-  go build -o workHelper main.go
+  go build -ldflags="-s -w" -o workHelper main.go
   #  Apple Silicon upx待兼容
   # upx workHelper
 elif [[ $1 == "run" ]]; then

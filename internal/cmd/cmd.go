@@ -20,4 +20,5 @@ func init() {
 	rootCmd.AddCommand(signCmd)
 	rootCmd.AddCommand(dateCmd)
 	rootCmd.AddCommand(uniqueIdCmd)
+	rootCmd.AddCommand(netCmd)
 }
