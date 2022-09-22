@@ -28,6 +28,12 @@
 
 下载 [Alfred WorkHelper](https://github.com/yqchilde/alfred-workhelper/tree/main/alfred_workflow) 下的 `WorkHelper.alfredworkflow` 插件，双击可将其加入到 Alfred 中。
 
+## 插件截图
+
+![menu](https://github.com/yqchilde/alfred-workhelper/blob/main/alfred_workflow/screenshots_menu.jpg)
+
+![date](https://github.com/yqchilde/alfred-workhelper/blob/main/alfred_workflow/screenshots_date.jpg)
+
 ## 开发调试
 
 1. 运行
