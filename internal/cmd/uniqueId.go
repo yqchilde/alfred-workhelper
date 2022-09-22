@@ -12,26 +12,18 @@ import (
 var uniqueIdCmd = &cobra.Command{
 	Use: "id",
 	Run: func(cmd *cobra.Command, args []string) {
-		if len(args) == 0 {
-			return
-		}
-
 		defer func() {
 			wf.SendFeedback()
 			return
 		}()
 
-		generateUUID(args)
-		snowflakeID(args)
+		generateUUID()
+		snowflakeID()
 	},
 }
 
 // generateUUID generates a UUID
-func generateUUID(args []string) {
-	if args[0] != "get" {
-		return
-	}
-
+func generateUUID() {
 	newUUID, err := uuid.NewUUID()
 	if err != nil {
 		wf.FatalError(err)
@@ -51,11 +43,7 @@ func generateUUID(args []string) {
 }
 
 // snowflakeID generates a snowflake ID
-func snowflakeID(args []string) {
-	if args[0] != "get" {
-		return
-	}
-
+func snowflakeID() {
 	node, err := snowflake.NewNode(1)
 	if err != nil {
 		fmt.Println(err)
